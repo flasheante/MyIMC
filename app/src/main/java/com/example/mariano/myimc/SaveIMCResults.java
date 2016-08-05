@@ -2,18 +2,28 @@ package com.example.mariano.myimc;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ListView;
 import android.widget.TextView;
-
+import com.example.mariano.myimc.IMC.IMCFactory;
+import com.example.mariano.myimc.IMC.IMCAdapter;
 public class SaveIMCResults extends AppCompatActivity {
+    private ListView IMCList;
+    private IMCFactory IMCFactory;
+    private IMCAdapter IMCAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_imcresults);
-        Bundle information = getIntent().getExtras();
-        ((TextView) findViewById(R.id.user_height)).setText(information.getString("user_height"));
-        ((TextView) findViewById(R.id.user_weight)).setText(information.getString("user_weight"));
-        ((TextView) findViewById(R.id.user_IMC)).setText(information.getString("user_IMC"));
-        ((TextView) findViewById(R.id.user_message)).setText(information.getString("user_message"));
+        IMCList = (ListView) findViewById(R.id.ListOfIMC);
+        IMCFactory = com.example.mariano.myimc.IMC.IMCFactory.getInstance(this);
+
+        try{
+            IMCAdapter = new IMCAdapter(IMCFactory.getIMCList());
+            IMCList.setAdapter(IMCAdapter);
+        }catch (Exception none){
+            Log.e(SaveIMCResults.class.toString(), "something bad happened");
+        }
     }
 }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mariano.myimc.IMC.IMC;
 import com.example.mariano.myimc.IMC.IMCFactory;
@@ -23,11 +24,6 @@ public class ShowIMCResults extends AppCompatActivity {
     private String user_message;
     private String user_IMC;
     private String user_name;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,70 +47,21 @@ public class ShowIMCResults extends AppCompatActivity {
         ((TextView) findViewById(R.id.user_input_imc)).setText(user_IMC);
         ((TextView) findViewById(R.id.user_input_height)).setText(user_height);
         ((TextView) findViewById(R.id.user_input_weight)).setText(user_weight);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     public void saveIMC(View view) {
-        //Intent newView = new Intent(this,SaveIMCResults.class);
         EditText user_input_name = (EditText) findViewById(R.id.user_name);
-
-
-        IMCFactory.getInstance(this).addIMC(new IMC(
-                user_input_name.toString(),
-                user_height.toString(),
-                user_weight.toString(),
-                user_IMC.toString(),
-                user_message.toString()
-        ));
-
-        //onBackPressed();
-        /*newView.putExtra("user_height", user_height);
-        newView.putExtra("user_weight",user_weight);
-        newView.putExtra("user_message",user_message);
-        newView.putExtra("user_IMC",user_IMC);
-        newView.putExtra("user_name",user_name);
-        startActivity(newView);*/
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "ShowIMCResults Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.example.mariano.myimc/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "ShowIMCResults Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.example.mariano.myimc/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
+        IMC newIMC = new IMC();
+        newIMC.setUserName(user_input_name.toString());
+        newIMC.setUserWeight(user_weight.toString());
+        newIMC.setUserHeight(user_height.toString());
+        newIMC.setUserIMC(user_IMC.toString());
+        newIMC.setUserMessage(user_message.toString());
+        if(!IMCFactory.getInstance(getApplicationContext()).addIMC(newIMC)){
+            Toast.makeText(getApplicationContext(), "Falló la creación", Toast.LENGTH_LONG).show();
+        } else {
+            Intent intent = new Intent(getApplicationContext(), SaveIMCResults.class);
+            startActivity(intent);
+        }
     }
 }
