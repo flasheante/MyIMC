@@ -52,11 +52,11 @@ public class ShowIMCResults extends AppCompatActivity {
     public void saveIMC(View view) {
         EditText user_input_name = (EditText) findViewById(R.id.user_name);
         IMC newIMC = new IMC();
-        newIMC.setUserName(user_input_name.toString());
-        newIMC.setUserWeight(user_weight.toString());
-        newIMC.setUserHeight(user_height.toString());
-        newIMC.setUserIMC(user_IMC.toString());
-        newIMC.setUserMessage(user_message.toString());
+        newIMC.setUserName(user_input_name.getText().toString());
+        newIMC.setUserWeight(user_weight);
+        newIMC.setUserHeight(user_height);
+        newIMC.setUserIMC(user_IMC);
+        newIMC.setUserMessage(user_message);
         if(!IMCFactory.getInstance(getApplicationContext()).addIMC(newIMC)){
             Toast.makeText(getApplicationContext(), "Falló la creación", Toast.LENGTH_LONG).show();
         } else {

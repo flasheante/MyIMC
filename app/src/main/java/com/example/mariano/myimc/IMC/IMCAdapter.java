@@ -52,6 +52,7 @@ public class IMCAdapter extends BaseAdapter {
 
         TextView userName = (TextView) currentView.findViewById(R.id.user_name);
         TextView userWeight = (TextView) currentView.findViewById(R.id.user_weight);
+        TextView userHeight = (TextView) currentView.findViewById(R.id.user_height);
         TextView userIMC = (TextView) currentView.findViewById(R.id.user_IMC);
         TextView userMessage = (TextView) currentView.findViewById(R.id.user_message);
 
