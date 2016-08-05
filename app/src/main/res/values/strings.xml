@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MyIMC</string>
+    <string name="title_activity_show_imc">ShowIMC</string>
+    <string name="title_activity_save_imcresults">SaveIMCResults</string>
+</resources>
